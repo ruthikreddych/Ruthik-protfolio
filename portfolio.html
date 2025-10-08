@@ -1,249 +1,697 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ch. Ruthik Reddy | Data Analyst Portfolio</title>
-<!-- Basic styles for a dark themed, animated portfolio inspired by hudahajira.com -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ch. Ruthik Reddy | Data Analyst Portfolio — Luxe Motion</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta name="color-scheme" content="dark">
+
 <style>
-  /* Reset & base */
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: Arial, Helvetica, sans-serif; background-color: #0a0f26; color: #f1f5f9; overflow-x: hidden; scroll-behavior: smooth; }
-  h1, h2, h3 { line-height: 1.2; }
-  p { line-height: 1.5; }
-  a { color: inherit; text-decoration: none; }
+  :root{
+    --bg:#070911;
+    --panel:#0b0f1e;
+    --ink:#EAEAF2;
+    --muted:#A5ACBF;
+    --brand:#C9A86A;
+    --brand-2:#7AD2D6;
+    --brand-3:#B89FE3;
+    --glow-1: 0 0 30px rgba(201,168,106,.45);
+    --glow-2: 0 0 40px rgba(122,210,214,.35);
+    --radius:22px;
+    --blur:12px;
+    --speed: 1600ms; /* slower global reveal */
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{height:100%;scroll-behavior:smooth}
+  body{scroll-snap-type:y mandatory;}
+  /* Smooth section paging */
+  html{ scroll-snap-type: y mandatory; }
+  section{scroll-snap-align:start; scroll-snap-stop:always; scroll-snap-align: start; scroll-snap-stop: normal; }
 
-  /* Sections */
-  section { min-height: 100vh; position: relative; padding: 80px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
-  section:nth-of-type(even) { background-color: #070b1d; }
-
-  /* Floating shapes container */
-  .shapes { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: -1; }
-  .shape { position: absolute; width: 30px; height: 30px; border: 1px solid #1de9b6; border-radius: 8px; opacity: 0.6; animation: float linear infinite; }
-  @keyframes float {
-    0%   { transform: translateY(100vh) rotate(0deg); }
-    100% { transform: translateY(-100vh) rotate(720deg); }
+  body{
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+    background: radial-gradient(1200px 1200px at 10% 10%, #0f1533 0%, #090d1f 45%, #06080f 100%), var(--bg);
+    color:var(--ink);
+    overflow-x:hidden;
   }
 
-  /* Navigation dots */
-  .nav-dots { position: fixed; right: 16px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 10; }
-  .nav-dots a { width: 10px; height: 10px; border-radius: 50%; background-color: #42526e; display: block; transition: background-color 0.3s; }
-  .nav-dots a.active { background-color: #1de9b6; }
+  /* Active background: aurora + particles canvas */
+  .aurora{
+    --sway: 18s;
 
-  /* Hero */
-  #hero h1 { font-size: 52px; margin-bottom: 10px; color: #ffffff; }
-  #hero h2 { font-size: 22px; color: #8ab4f8; max-width: 600px; }
+    position:fixed; inset:0; z-index:-4;
+    background:
+      radial-gradient(700px 700px at 10% 20%, rgba(200,160,100,.18), transparent 60%),
+      radial-gradient(800px 800px at 80% 10%, rgba(125,210,215,.16), transparent 65%),
+      radial-gradient(900px 900px at 50% 100%, rgba(184,159,227,.16), transparent 60%);
+    filter: blur(42px) saturate(120%);
+    animation: drift 24s ease-in-out infinite alternate; /* slower */
+    opacity:.9;
+  }
+  canvas#fx{ position:fixed; inset:0; z-index:-3; pointer-events:none; }
 
-  /* Projects */
-  .projects-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; max-width: 1000px; width: 100%; margin-top: 40px; }
-  .project-card { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; text-align: left; box-shadow: 0 0 10px rgba(0,0,0,0.3); backdrop-filter: blur(4px); }
-  .project-card h3 { font-size: 24px; color: #1de9b6; margin-bottom: 10px; }
-  .project-card p { color: #d1d5db; margin-bottom: 15px; }
-  .project-card a { color: #1de9b6; font-weight: bold; }
+  @keyframes drift{ 
+    0%{ transform: translateY(-1%) translateX(0%) scale(1.03); }
+    100%{ transform: translateY(1%) translateX(-1%) scale(1.06); }
+  }
 
-  /* Experience */
-  .experience-container { max-width: 800px; width: 100%; margin-top: 40px; }
-  .experience-item { background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 24px; margin-bottom: 20px; backdrop-filter: blur(4px); text-align: left; }
-  .experience-item h3 { font-size: 22px; color: #1de9b6; }
-  .experience-item span { display: block; font-size: 14px; color: #8ab4f8; margin-bottom: 10px; }
-  .experience-item ul { margin-left: 20px; list-style: disc; }
-  .experience-item li { margin-bottom: 6px; color: #d1d5db; }
+  /* Cursor spotlight (slower) */
+  .spotlight{
+    position:fixed; inset:0; pointer-events:none; z-index:-2;
+    background: radial-gradient(220px 220px at var(--mx,50%) var(--my,50%), rgba(255,255,255,.06), transparent 60%);
+    transition: background .12s linear;
+  }
 
-  /* About */
-  #about h2 { font-size: 32px; margin-bottom: 20px; color: #ffffff; }
-  #about p { max-width: 800px; margin-bottom: 20px; color: #d1d5db; }
-  .skills-grid { max-width: 800px; width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
-  .skill { border: 1px solid #1de9b6; border-radius: 20px; padding: 6px 12px; font-size: 14px; color: #1de9b6; text-align: center; }
-  .interests { margin-top: 30px; }
-  .interests h3 { color: #1de9b6; margin-bottom: 10px; }
-  .interests p { color: #d1d5db; max-width: 700px; }
+  section{scroll-snap-align:start; scroll-snap-stop:always;
+    min-height:100svh; display:grid; place-items:center;
+    padding: 100px 24px; position:relative;
+  }
+  .container{ width:min(1100px, 92vw); margin-inline:auto; }
 
-  /* Contact */
-  #contact h2 { font-size: 32px; margin-bottom: 10px; color: #ffffff; }
-  #contact p { color: #d1d5db; margin-bottom: 20px; }
-  .contact-buttons { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
-  .contact-buttons a { border: 1px solid #1de9b6; border-radius: 20px; padding: 10px 20px; font-size: 16px; color: #1de9b6; transition: background-color 0.3s, color 0.3s; }
-  .contact-buttons a:hover { background-color: #1de9b6; color: #0a0f26; }
+  /* Rail */
+  .rail{
+    position:fixed; right:18px; top:50%; translate:0 -50%; z-index:9;
+    display:flex; flex-direction:column; align-items:center; gap:14px;
+  }
+  .dot{
+    width:12px;height:12px;border-radius:999px;
+    background:linear-gradient(180deg,var(--brand),#9f7f4a);
+    box-shadow: var(--glow-1);
+    opacity:.35; transition: transform .5s, opacity .5s;
+    outline: 1px solid rgba(255,255,255,.08);
+  }
+  .dot.active{ opacity:1; transform: scale(1.2) }
+  .rail .line{
+    width:2px; height:40px; background:linear-gradient(var(--brand-3),transparent);
+    opacity:.45; border-radius:2px;
+  }
+
+  h1,h2,h3{ line-height:1.1 }
+  .display{
+    font-family:"Playfair Display", serif;
+    font-weight:800;
+    letter-spacing:.5px;
+    font-size: clamp(36px, 5vw, 64px);
+    background: linear-gradient(92deg, var(--brand) 0%, #fff 40%, var(--brand-2) 80%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    filter: drop-shadow(0 4px 18px rgba(201,168,106,.16));
+    animation: titleShimmer 5.5s ease-in-out infinite; /* slower */
+  }
+  @keyframes titleShimmer{
+    0%{ filter: drop-shadow(0 6px 18px rgba(201,168,106,.16)); }
+    50%{ filter: drop-shadow(0 10px 28px rgba(122,210,214,.22)); }
+    100%{ filter: drop-shadow(0 6px 18px rgba(201,168,106,.16)); }
+  }
+  .kicker{
+    color:var(--muted);
+    margin-top:14px;
+    font-size: clamp(16px, 2.2vw, 22px);
+  }
+
+  /* Panels */
+  .panel{
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.12);
+    border-radius: var(--radius);
+    backdrop-filter: blur(var(--blur));
+    box-shadow: 0 10px 40px rgba(0,0,0,.35);
+    overflow:hidden; position:relative;
+  }
+  .panel::after{
+    content:""; position:absolute; inset:-1px; border-radius:inherit; pointer-events:none;
+    background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.10) 40%, transparent 60%);
+    transform: translateX(-120%) skewX(-20deg);
+    animation: sweep 8.5s ease-in-out infinite; /* slower */
+  }
+  @keyframes sweep{
+    0%{ transform: translateX(-120%) skewX(-20deg) }
+    60%{ transform: translateX(140%) skewX(-20deg) }
+    100%{ transform: translateX(140%) skewX(-20deg) }
+  }
+
+  #hero .hero-wrap{ display:grid; gap:26px; text-align:center }
+  .badges{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap }
+  .badge{
+    border:1px solid rgba(255,255,255,.14);
+    color:#fff; padding:10px 14px; border-radius:999px; font-size:14px;
+    background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(189, 11, 11, 0.02));
+    box-shadow: var(--glow-1.5);
+    transform: translateZ(10px);
+    transition: transform 0.1s;
+  }
+  .badge:hover{ transform: translateY(-10px) }
+
+  /* Projects grid with flip cards */
+  .grid{ display:grid; gap:18px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .flip{
+    perspective: 1200px;
+  }
+  .flip .inner{
+    position:relative; width:100%; height:100%;
+    transform-style: preserve-3d;
+    transition: transform .8s cubic-bezier(.2,.7,.2,1);
+    min-height:260px;
+  }
+  .flip.is-flipped .inner{ transform: rotateY(180deg); }
+  .face{
+    position:absolute; inset:0; border-radius: var(--radius);
+    backface-visibility: hidden;
+    padding:24px;
+  }
+  .face.back{
+    transform: rotateY(180deg);
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .face h3{ color:var(--brand); font-size:22px; margin-bottom:8px }
+  .face p{ color:var(--muted) }
+  .face a{ color:var(--brand-2); font-weight:600; display:inline-block; margin-top:12px }
+
+  /* Glow on pointer */
+  .shine{
+    position:absolute; inset:-1px; border-radius: inherit; pointer-events:none;
+    background: radial-gradient(400px 220px at var(--mx,50%) var(--my,40%), rgba(255,255,255,.14), transparent 60%);
+    mix-blend-mode: screen; opacity:.7;
+    transition: opacity .25s;
+  }
+  .flip:hover .shine{ opacity:1 }
+
+  /* Timeline */
+  .timeline{ display:grid; gap:18px; }
+  .item{ padding:22px; }
+  .item h4{ color:var(--brand); font-size:20px; }
+  .item .sub{ color:var(--brand-3); font-size:14px; margin:6px 0 10px }
+  .item li{ color:#cfd5e6; margin:6px 0 0 18px }
+
+  .chips{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px }
+  .chip{
+    border:1px solid rgba(255,255,255,.14);
+    padding:8px 12px; border-radius:999px; font-size:13px; color:#E9EEF9;
+    background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  }
+
+  .cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:16px;text-align:center; justify-content:center; }
+  .btn{
+    position:relative; isolation:isolate;
+    border:1px solid rgba(255,255,255,.16);
+    border-radius: 999px; padding:12px 20px; font-weight:600;
+    background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
+    color:#fff; text-decoration:none;
+    overflow:hidden;
+  }
+  .btn .pulse{
+    content:""; position:absolute; inset:-1px; border-radius:inherit; z-index:-1;
+    background: radial-gradient(200px 120px at var(--mx,50%) var(--my,50%), rgba(201,168,106,.22), transparent 50%);
+    transition: transform .08s, opacity .25s;
+    opacity:.8;
+  }
+  .btn:hover{ box-shadow: var(--glow-1) }
+
+  /* Reveal on scroll (slower) */
+  .reveal{ opacity:0; transform: translateY(26px) scale(.985); filter: blur(6px) }
+  .reveal.in{ opacity:1; transform:none; filter:none; transition: all var(--speed) cubic-bezier(.2,.75,.2,1) }
+
+  /* Section transition wipe */
+  .wipe{
+    position:fixed; inset:0; pointer-events:none; z-index:99;
+    background: radial-gradient(1000px 600px at 100% 50%, rgba(201,168,106,.18), transparent 60%),
+                linear-gradient(120deg, rgba(122,210,214,.10), transparent 40%);
+    opacity:0; transform: translateX(30%);
+  }
+  .wipe.run{
+    animation: wipeIn .95s cubic-bezier(.2,.7,.2,1);
+  }
+  @keyframes wipeIn{
+    0%{ opacity:0; transform: translateX(30%); }
+    25%{ opacity:1; transform: translateX(0%); }
+    100%{ opacity:0; transform: translateX(-20%); }
+  }
+
+  /* Parallax stripe (slower) */
+  .parallax{
+    position:absolute; inset:auto auto 8% 50%; translate:-50% 0;
+    width:min(900px, 84vw); height:1px; pointer-events:none;
+    border-top:1px solid rgba(255,255,255,.08);
+    box-shadow: 0 -1px 0 rgba(255,255,255,.06);
+    opacity:.6;
+  }
+
+  footer{ padding:26px; text-align:center; color:var(--muted) }
+
+  /* Progress bar */
+  .progress{ position:fixed; top:0; left:0; height:3px; width:0%; z-index:20;
+    background:linear-gradient(90deg, var(--brand), var(--brand-2), var(--brand-3));
+    box-shadow: 0 0 18px rgba(201,168,106,.6);
+    transition: width .4s ease; }
+
+  /* Stars canvas */
+  .stars{ position:fixed; inset:0; z-index:-4; filter: blur(0.2px) brightness(1.05); opacity:.65; }
+
+  /* Slow down certain transitions for 'luxe' feel */
+  .badge, .btn, .card, .panel::after, .reveal.in{ transition-duration: calc(var(--speed) * 1.2) !important; }
+  .aurora{
+    --sway: 18s;
+ animation-duration: 24s !important; }
+  .rail .dot{ transition-duration: .6s !important; }
+
+  /* Flip cards */
+  .flip{ perspective: 1200px; }
+  .flip-inner{
+    position:relative; width:100%; height:100%;
+    transform-style:preserve-3d;
+    transition: transform calc(var(--speed) * 1.1) cubic-bezier(.2,.75,.2,1);
+  }
+  .flip:hover .flip-inner, .flip.flipped .flip-inner{ transform: rotateY(180deg); }
+  .flip-face{
+    position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+    display:flex; flex-direction:column;
+  }
+  .flip-back{ transform: rotateY(180deg); }
+  .card h3{ margin-bottom:10px; }
+  .card .mini{ font-size:13px; color:var(--muted); margin-top:6px; }
+
+
+  /* Page transition curtain */
+  .curtain{ position:fixed; inset:0; pointer-events:none; z-index:19;
+    background: radial-gradient(1200px 600px at 50% 50%, rgba(201,168,106,.10), transparent 60%),
+                linear-gradient(120deg, rgba(184,159,227,.12), rgba(122,210,214,.12), transparent 60%);
+    opacity:0; transform: scale(1.05);
+    transition: opacity .8s ease, transform .8s ease;
+    mix-blend-mode: screen;
+  }
+  .curtain.show{ opacity:1; transform: none; }
+
+
+  /* Consistent project card sizing */
+  #projects .card{ min-height: 320px; }
+  #projects .flip-face{ padding: 18px 22px; justify-content:flex-start; }
+  #projects .grid{ align-items:stretch; }
+  #projects .btn{ margin-top:auto; } /* push button to bottom on front/back */
+  #projects .mini{ display:block; margin-top:8px; opacity:.8; }
+  #projects .panel.card{ display:flex; }
 
 </style>
 </head>
 <body>
-<!-- Navigation Dots for quick access to sections -->
-<div class="nav-dots">
-  <a href="#hero" class="active"></a>
-  <a href="#projects"></a>
-  <a href="#experience"></a>
-  <a href="#about"></a>
-  <a href="#contact"></a>
-</div>
+  <canvas id="stars" class="stars"></canvas>
+  <div class="progress" id="progress"></div>
+  <div class="aurora"></div>
+  <canvas id="fx"></canvas>
+  <div class="spotlight" id="spot"></div>
+  <div class="curtain" id="curtain"></div>
 
-<!-- Hero Section -->
-<section id="hero">
-  <div class="shapes"></div>
-  <h1>Ch. Ruthik Reddy</h1>
-  <h2>Data Analyst turning complex data into strategic insights</h2>
-</section>
+  <div class="wipe" id="wipe"></div>
 
-<!-- Projects Section -->
-<section id="projects">
-  <div class="shapes"></div>
-  <h2 style="font-size:32px; color:#fff;">Featured Projects</h2>
-  <p style="color:#d1d5db; max-width:800px;">A selection of my recent work demonstrating expertise in data analytics, machine learning and business intelligence.</p>
-  <div class="projects-container">
-    <!-- Project 1 -->
-    <div class="project-card">
-      <h3>Pneumonia Detection with Deep Learning</h3>
-      <p>Built a convolutional neural network (VGG16/19) to classify pneumonia from chest X‑ray images with 94% accuracy. Responsible for data cleaning, augmentation and model tuning to improve diagnostic reliability.</p>
-      <a href="https://github.com/ruthikreddych/" target="_blank">Learn more →</a>
-    </div>
-    <!-- Project 2 -->
-    <div class="project-card">
-      <h3>AI Mimicking Multi‑Domain Intelligence</h3>
-      <p>Led the development of an AI system capable of translating languages, performing sentiment analysis, solving math problems and engaging in interactive dialogue, including a Spanish‑to‑English translation module for real‑time conversations.</p>
-      <a href="https://github.com/ruthikreddych/" target="_blank">Learn more →</a>
-    </div>
-    <!-- Project 3 -->
-    <div class="project-card">
-      <h3>Dynamic Sales Dashboard</h3>
-      <p>Designed an interactive Power BI dashboard to visualize sales trends and pricing strategies. Enabled stakeholders to monitor KPIs and drive a 15% boost in revenue while reducing surplus inventory by 20%.</p>
-      <a href="https://github.com/ruthikreddych/" target="_blank">Learn more →</a>
-    </div>
-    <!-- Project 4 -->
-    <div class="project-card">
-      <h3>SuperNova SBI risk Model</h3>
-      <p>Developed a risk assessment model for SuperNova SBI using machine learning techniques to predict loan default probabilities, resulting in a 30% reduction in non-performing assets.</p>
-      <a href="https://github.com/ruthikreddych/supernova-sbl-risk-model" target="_blank">Learn more →</a>
-    </div>
-  </div>
-</section>
+  <nav class="rail" aria-label="section navigation">
+    <a href="#hero" class="dot" title="Hero"></a><span class="line"></span>
+    <a href="#projects" class="dot" title="Projects"></a><span class="line"></span>
+    <a href="#experience" class="dot" title="Experience"></a><span class="line"></span>
+    <a href="#about" class="dot" title="About"></a><span class="line"></span>
+    <a href="#contact" class="dot" title="Contact"></a>
+  </nav>
 
-<!-- Experience Section -->
-<section id="experience">
-  <div class="shapes"></div>
-  <h2 style="font-size:32px; color:#fff;">Professional Experience</h2>
-  <div class="experience-container">
-    <!-- Experience Item 1 -->
-    <div class="experience-item">
-      <h3>Data Analyst - Financial services, Charles Schwab</h3>
-      <span>Chicago, IL &nbsp;|&nbsp; Jul 2024 – Present</span>
-      <ul>
-        <li>Developed 12+ Power BI dashboards tracking investment portfolio KPIs, boosting client satisfaction by 18% in one quarter.</li>
-        <li>Analyzed 15M+ transaction records monthly using SQL and Python to detect high‑fee investment behaviour, reducing churn by 6.2%.</li>
-        <li>Built automated data quality checks across 7 pipelines integrated with AWS S3 & Redshift, cutting errors by 91%.</li>
-        <li>Designed an ETL framework with dbt & Airflow processing 2 TB/week, improving reporting accuracy for finance & compliance.</li>
-        <li>Conducted hypothesis testing & regression analysis on client portfolios, informing product packaging for younger investors.</li>
-        <li>Partnered with product managers to execute A/B tests for pricing models, saving $3.8M annually.</li>
-      </ul>
+  <section id="hero">
+    <div class="container hero-wrap reveal">
+      <h1 class="display">Ch. Ruthik Reddy</h1>
+      <p class="kicker">Data Analyst turning complex data into strategic insights.</p>
+      <div class="badges">
+        <span class="badge">SQL • Python • Power BI</span>
+        <span class="badge">Tableau • AWS • dbt</span>
+        <span class="badge">A/B Testing • ML</span>
+      </div>
     </div>
-    <!-- Experience Item 2 -->
-    <div class="experience-item">
-      <h3>Data Analyst - Healthcare, Citius Tech</h3>
-      <span>Mumbai, India &nbsp;|&nbsp; Jan 2020 – Nov 2022</span>
-      <ul>
-        <li>Cleaned and analysed 5M+ patient records using SQL & Python, detecting care gaps and increasing preventative follow‑ups by 17%.</li>
-        <li>Designed 10+ Tableau dashboards for real‑time healthcare KPIs, reducing operational inefficiencies by 24%.</li>
-        <li>Migrated manual reports to Power BI & SQL Server, cutting preparation time by 45% and improving accessibility.</li>
-        <li>Forecasted hospital bed occupancy with time series models, improving resource planning by 22% during COVID‑19 surges.</li>
-        <li>Automated ETL workflows across 6 hospital networks, ensuring 99.8% uptime for analytics tools.</li>
-        <li>Performed root cause analysis of insurance claim discrepancies, saving $1.2M over two years.</li>
-      </ul>
+    <div class="parallax"></div>
+  </section>
+
+  <section id="projects">
+    <div class="container reveal">
+      <h2 class="display" style="font-size: clamp(28px,4vw,44px)">Featured Projects</h2>
+      <p class="kicker">A selection of my recent work demonstrating expertise in data analytics, machine learning and business intelligence.</p>
+      <div class="grid" id="projGrid">
+        <!-- Project 1 -->
+        <article class="panel card flip">
+          <div class="shine"></div>
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <h3>Pneumonia Detection (CNN)</h3>
+              <p>Built a convolutional neural network (VGG16/19) to classify pneumonia from chest X‑ray images with 94% accuracy. Responsible for data cleaning, augmentation and model tuning to improve diagnostic reliability.</p>
+              <span class="mini">Hover/tap to flip</span>
+              <a href="https://github.com/ruthikreddych/" target="_blank" class="btn"><span class="pulse"></span>Details →</a>
+            </div>
+            <div class="flip-face flip-back">
+              <h3>Stack & Impact</h3>
+              <p>TensorFlow, Keras, OpenCV, Optuna • ROC‑AUC 0.96 • 94% accuracy</p>
+              <a href="https://github.com/ruthikreddych/" target="_blank" class="btn"><span class="pulse"></span>Repo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="panel card flip">
+          <div class="shine"></div>
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <h3>AI Mimicking Multi‑Domain Intelligence</h3>
+              <p>Led the development of an AI system capable of translating languages, performing sentiment analysis, solving math problems and engaging in interactive dialogue, including a Spanish‑to‑English translation module for real‑time conversations.</p>
+              <span class="mini">Hover/tap to flip</span>
+              <a href="https://github.com/ruthikreddych/" target="_blank" class="btn"><span class="pulse"></span>Details →</a>
+            </div>
+            <div class="flip-face flip-back">
+              <h3>Stack & Impact</h3>
+              <p>Transformers, FastAPI, Redis, Docker • &lt;120ms median latency</p>
+              <a href="https://github.com/ruthikreddych/" target="_blank" class="btn"><span class="pulse"></span>Repo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="panel card flip">
+          <div class="shine"></div>
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <h3>Dynamic Sales Dashboard</h3>
+              <p>Designed an interactive Power BI dashboard to visualize sales trends and pricing strategies. Enabled stakeholders to monitor KPIs and drive a 15% boost in revenue while reducing surplus inventory by 20%.</p>
+              <span class="mini">Hover/tap to flip</span>
+              <a href="https://github.com/ruthikreddych/" target="_blank" class="btn"><span class="pulse"></span>Details →</a>
+            </div>
+            <div class="flip-face flip-back">
+              <h3>Stack & Impact</h3>
+              <p>Power BI, SQL Server, DAX • +15% revenue • −20% surplus inventory</p>
+              <a href="https://github.com/ruthikreddych/" target="_blank" class="btn"><span class="pulse"></span>Repo →</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="panel card flip">
+          <div class="shine"></div>
+          <div class="flip-inner">
+            <div class="flip-face flip-front">
+              <h3>SuperNova Risk Model</h3>
+              <p>Developed a risk assessment model for SuperNova SBI using machine learning techniques to predict loan default probabilities, resulting in a 30% reduction in non-performing assets.</p>
+              <span class="mini">Hover/tap to flip</span>
+              <a href="https://github.com/ruthikreddych/supernova-sbl-risk-model" target="_blank" class="btn"><span class="pulse"></span>Details →</a>
+            </div>
+            <div class="flip-face flip-back">
+              <h3>Stack & Impact</h3>
+              <p>XGBoost, SHAP, Airflow • 30% NPA reduction (pilot) • PSI drift guardrails</p>
+              <a href="https://github.com/ruthikreddych/supernova-sbl-risk-model" target="_blank" class="btn"><span class="pulse"></span>Repo →</a>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div style="text-align:center; margin-top:22px" class="reveal">
+        <a class="btn" href="https://github.com/ruthikreddych/" target="_blank"><span class="pulse"></span>View All Projects on GitHub</a>
+      </div>
     </div>
-  </div>
-</section>
+    <div class="parallax"></div>
+  </section>
 
-<!-- About Section -->
-<section id="about">
-  <div class="shapes"></div>
-  <h2>About Me</h2>
-  <p>I'm a data analyst with over four years of experience transforming complex datasets into actionable insights for business optimisation. Skilled in SQL, Python and BI tools like Power BI and Tableau, I thrive on solving problems, designing dashboards and collaborating with cross‑functional teams to drive data‑driven decisions.</p>
-  <h3 style="color:#1de9b6; margin-bottom:12px;">Technical Skills</h3>
-  <div class="skills-grid">
-    <div class="skill">Python</div>
-    <div class="skill">R</div>
-    <div class="skill">SQL</div>
-    <div class="skill">Power BI</div>
-    <div class="skill">Tableau</div>
-    <div class="skill">Looker</div>
-    <div class="skill">matplotlib/seaborn</div>
-    <div class="skill">Plotly</div>
-    <div class="skill">MySQL</div>
-    <div class="skill">PostgreSQL</div>
-    <div class="skill">BigQuery</div>
-    <div class="skill">Snowflake</div>
-    <div class="skill">AWS</div>
-    <div class="skill">Azure</div>
-    <div class="skill">ETL (dbt/Airflow)</div>
-    <div class="skill">A/B Testing</div>
-    <div class="skill">Regression & Classification</div>
-    <div class="skill">Clustering</div>
-    <div class="skill">Time Series</div>
-    <div class="skill">Natural Language Processing</div>
-    <div class="skill">Deep Learning</div>
-    <div class="skill">Model Context Protocols</div>
-    <div class="skill">Playwright</div>
-    <div class="skill">AI agents</div>
-  </div>
-  <div class="interests">
-    <h3>When I'm Not Analyzing Data</h3>
-    <p>I enjoy exploring the latest advancements in AI & machine learning, reading tech blogs and experimenting with data‑driven projects. In my free time, you'll find me cooking, travelling and learning new skills.</p>
-  </div>
-</section>
+  <section id="experience">
+    <div class="container reveal">
+      <h2 class="display" style="font-size: clamp(28px,4vw,44px)">Professional Experience</h2>
+      <div class="timeline">
+        <div class="panel item">
+          <h4>Data Analyst — Financial Services, Charles Schwab</h4>
+          <div class="sub">Chicago, IL • Jul 2024 – Present</div>
+          <ul>
+            <li>12+ Power BI dashboards boosting client satisfaction by 18% in one quarter.</li>
+            <li>Analyzed 15M+ monthly transactions using SQL & Python, reducing churn by 6.2%.</li>
+            <li>Automated data-quality checks across 7 pipelines (AWS S3/Redshift), cutting errors by 91%.</li>
+            <li>ETL with dbt/Airflow at ~2 TB/week; improved regulatory reporting accuracy.</li>
+            <li>Pricing model A/B tests with product teams, saving $3.8M annually.</li>
+          </ul>
+        </div>
+        <div class="panel item">
+          <h4>Data Analyst — Healthcare, Citius Tech</h4>
+          <div class="sub">Mumbai, India • Jan 2020 – Nov 2022</div>
+          <ul>
+            <li>Cleaned 5M+ patient records to detect care gaps; preventative follow-ups ↑17%.</li>
+            <li>10+ Tableau dashboards, cutting operational inefficiencies by 24%.</li>
+            <li>Migrated manual reporting to Power BI/SQL Server; prep time ↓45%.</li>
+            <li>Forecasted bed occupancy via time-series models during COVID-19 surges.</li>
+            <li>Automated ETL across 6 networks; resolved claim discrepancies and saved $1.2M.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"></div>
+  </section>
 
-<!-- Contact Section -->
-<section id="contact">
-  <div class="shapes"></div>
-  <h2>Let's Connect</h2>
-  <p>Have a New openings? Get in touch!</p>
-  <div class="contact-buttons">
-    <a href="mailto:chruthik84@gmail.com">Email</a>
-    <a href="https://www.linkedin.com/in/ruthikreddy-cheruku/" target="_blank">LinkedIn</a>
-    <a href="https://github.com/ruthikreddych/" target="_blank">GitHub</a>
-    <a href="tel:+17737549915">Contact Me</a>
-  </div>
-</section>
+  <section id="about">
+    <div class="container reveal">
+      <h2 class="display" style="font-size: clamp(28px,4vw,44px)">About Me</h2>
+      <p class="kicker">I'm a data analyst with over four years of experience transforming complex datasets into actionable insights for business optimisation. Skilled in SQL, Python and BI tools like Power BI and Tableau, I thrive on solving problems, designing dashboards and collaborating with cross‑functional teams to drive data‑driven decisions.</p>
+      <div class="panel" style="padding:24px; margin-top:14px">
+        <p style="color:#d7dbee">Skilled in SQL, Python and BI tools (Power BI, Tableau). I enjoy structured problem solving, experimentation and working with cross-functional partners to translate analytics into action.</p>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">R</span><span class="chip">SQL</span>
+          <span class="chip">Power BI</span><span class="chip">Tableau</span><span class="chip">Looker</span>
+          <span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">BigQuery</span>
+          <span class="chip">Snowflake</span><span class="chip">AWS</span><span class="chip">Azure</span>
+          <span class="chip">dbt</span><span class="chip">Airflow</span><span class="chip">A/B Testing</span>
+          <span class="chip">Regression</span><span class="chip">Classification</span><span class="chip">Clustering</span>
+          <span class="chip">Time Series</span><span class="chip">NLP</span><span class="chip">Deep Learning</span>
+          <span class="chip">Playwright</span><span class="chip">AI agents</span><span class="chip">Model Context Protocols</span>
+        </div>
+        </div>
+    </div>
+    <div class="parallax"></div>
+  </section>
 
-<!-- JavaScript: generate floating shapes and highlight nav dots -->
+  <section id="contact">
+    <div class="container reveal" style="text-align:center">
+      <h2 class="display" style="font-size: clamp(28px,4vw,44px)">Let’s Connect</h2>
+      <p class="kicker">Have a new openings? Get in touch!</p>
+      <div class="cta">
+        <a class="btn" href="mailto:chruthik84@gmail.com"><span class="pulse"></span>Email</a>
+        <a class="btn" href="https://www.linkedin.com/in/ruthikreddy-cheruku/" target="_blank"><span class="pulse"></span>LinkedIn</a>
+        <a class="btn" href="https://github.com/ruthikreddych/" target="_blank"><span class="pulse"></span>GitHub</a>
+        <a class="btn" href="tel:+17737549915"><span class="pulse"></span>Contact Me</a>
+      </div>
+    </div>
+  </section>
+  <footer>
+    © <span id="year"></span> Ruthik Reddy All rights reserved.
+  </footer>
+
 <script>
-  // Generate floating shapes for each section
-  function createShapes() {
-    document.querySelectorAll('.shapes').forEach(function(container) {
-      for (let i = 0; i < 20; i++) {
-        const shape = document.createElement('div');
-        shape.classList.add('shape');
-        // Random size and color
-        const size = 20 + Math.random() * 40;
-        shape.style.width = size + 'px';
-        shape.style.height = size + 'px';
-        shape.style.borderRadius = Math.random() > 0.5 ? '50%' : '10%';
-        shape.style.borderColor = Math.random() > 0.5 ? '#1de9b6' : '#f559ab';
-        // Random start position
-        shape.style.left = Math.random() * 100 + '%';
-        shape.style.top = Math.random() * 100 + '%';
-        // Random animation duration and delay
-        const duration = 20 + Math.random() * 20;
-        const delay = Math.random() * -20;
-        shape.style.animationDuration = duration + 's';
-        shape.style.animationDelay = delay + 's';
-        container.appendChild(shape);
-      }
-    });
-  }
-  createShapes();
+  // Live year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Intersection Observer to highlight active nav dot
+  // Cursor spotlight follow (slower)
+  const spot = document.getElementById('spot');
+  window.addEventListener('pointermove', (e)=>{
+    spot.style.setProperty('--mx', e.clientX + 'px');
+    spot.style.setProperty('--my', e.clientY + 'px');
+    document.querySelectorAll('.btn, .panel, .flip').forEach(el=>{
+      el.style.setProperty('--mx', e.clientX - el.getBoundingClientRect().left + 'px');
+      el.style.setProperty('--my', e.clientY - el.getBoundingClientRect().top + 'px');
+    });
+  });
+
+  // Reveal on scroll (already slowed via CSS var)
+  const io = new IntersectionObserver((ents)=>{
+    ents.forEach(ent=>{
+      if(ent.isIntersecting){ ent.target.classList.add('in'); }
+    })
+  }, {threshold:.18});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  // Rail active states + section transition wipe
   const sections = document.querySelectorAll('section');
-  const navDots = document.querySelectorAll('.nav-dots a');
-  const options = { root: null, rootMargin: '0px', threshold: 0.5 };
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navDots.forEach(dot => dot.classList.remove('active'));
-        const id = entry.target.getAttribute('id');
-        document.querySelector('.nav-dots a[href="#' + id + '"]').classList.add('active');
+  const dots = document.querySelectorAll('.rail .dot');
+  const wipe = document.getElementById('wipe');
+  let currentIndex = 0;
+  const secIO = new IntersectionObserver((ents)=>{
+    ents.forEach(ent=>{
+      if(ent.isIntersecting){
+        const idx = Array.from(sections).indexOf(ent.target);
+        if(idx !== currentIndex){
+          currentIndex = idx;
+          wipe.classList.remove('run');
+          // force reflow to restart animation
+          void wipe.offsetWidth;
+          wipe.classList.add('run');
+        }
+        dots.forEach(d=>d.classList.remove('active'));
+        dots[idx].classList.add('active');
+      }
+    })
+  }, {threshold:.65});
+  sections.forEach(s=>secIO.observe(s));
+
+  // Smooth click + wipe for rail dots
+  document.querySelectorAll('.rail a').forEach(a=>{
+    a.addEventListener('click', ()=>{
+      wipe.classList.remove('run'); void wipe.offsetWidth; wipe.classList.add('run');
+    });
+  });
+
+  // Flip cards: hover (desktop) + tap (mobile)
+  document.querySelectorAll('.flip').forEach(card=>{
+    const inner = card.querySelector('.inner');
+    // Hover is handled by CSS transform for .is-flipped toggle via JS on enter/leave (for consistency)
+    card.addEventListener('mouseenter', ()=>{ if(window.matchMedia('(hover:hover)').matches){ inner.classList.add('hovering'); }});
+    card.addEventListener('mouseleave', ()=>{ inner.classList.remove('hovering'); card.classList.remove('is-flipped'); });
+    // Click/tap toggles flip
+    card.addEventListener('click', ()=>{
+      card.classList.toggle('is-flipped');
+    });
+    // Pointer glow tracking
+    card.addEventListener('pointermove', (e)=>{
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      card.style.setProperty('--mx', x+'px');
+      card.style.setProperty('--my', y+'px');
+    });
+  });
+
+  // Parallax stripe (slower)
+  window.addEventListener('scroll', ()=>{
+    const y = window.scrollY * .10;
+    document.querySelectorAll('.parallax').forEach(p=>{
+      p.style.transform = `translateY(${y}px)`;
+    });
+  });
+
+  // Particle background with occasional "action" comets on section change
+  const canvas = document.getElementById('fx');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles;
+  function resize(){
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    particles = particles || [];
+    while(particles.length < 120){ // gentle density
+      particles.push(spawn());
+    }
+  }
+  window.addEventListener('resize', resize);
+  function spawn(x=Math.random()*w, y=Math.random()*h, speed= (Math.random()*0.4)+0.1, comet=false){
+    return {
+      x, y,
+      vx: (Math.random()-0.5)*speed,
+      vy: (Math.random()-0.5)*speed,
+      r: comet ? (Math.random()*2+1.5) : (Math.random()*1.2+0.3),
+      a: Math.random()*0.6 + 0.2,
+      comet,
+      life: comet ? 60 : 0
+    };
+  }
+  function step(){
+    ctx.clearRect(0,0,w,h);
+    // soft glow background
+    for(const p of particles){
+      p.x += p.vx; p.y += p.vy;
+      if(p.x<-20||p.x>w+20||p.y<-20||p.y>h+20){
+        // respawn softly inside
+        p.x = Math.random()*w; p.y = Math.random()*h;
+      }
+      if(p.comet){
+        p.life -= 1;
+        p.a *= 0.985;
+        if(p.life<=0){ Object.assign(p, spawn()); }
+        // comet trail
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x - p.vx*20, p.y - p.vy*20);
+        ctx.lineWidth = 1.2;
+        ctx.strokeStyle = `rgba(201,168,106,${p.a})`;
+        ctx.stroke();
+      }
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(186, 170, 220, ${p.a})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(step);
+  }
+  function cometBurst(){
+    for(let i=0;i<10;i++){
+      const angle = Math.random()*Math.PI*2;
+      const speed = (Math.random()*1.8)+0.8;
+      const vx = Math.cos(angle)*speed, vy = Math.sin(angle)*speed;
+      const c = spawn(w/2, h*0.4 + (Math.random()*h*0.2 - h*0.1), speed, true);
+      c.vx = vx; c.vy = vy; c.life = 80;
+      particles.push(c);
+    }
+  }
+  resize(); step();
+
+  // Trigger comet burst each time section changes (adds "action moments")
+  const burstObserver = new IntersectionObserver((ents)=>{
+    ents.forEach(ent=>{
+      if(ent.isIntersecting){ cometBurst(); }
+    });
+  }, {threshold:.88});
+  sections.forEach(s=>burstObserver.observe(s));
+
+  // Stars / particles background
+  (function(){
+    const c = document.getElementById('stars');
+    const ctx = c.getContext('2d');
+    let w, h, stars;
+    function resize(){
+      w = c.width = window.innerWidth; h = c.height = window.innerHeight;
+      stars = Array.from({length: Math.min(220, Math.floor(w*h/7000))}, ()=> ({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        z: Math.random()*0.8 + 0.2,
+        vx: (Math.random()*0.2+0.05) * (Math.random()<.5?-1:1),
+        vy: (Math.random()*0.15+0.02) * (Math.random()<.5?-1:1),
+        r: Math.random()*1.2 + .2
+      }));
+    }
+    resize(); window.addEventListener('resize', resize);
+    function step(){
+      ctx.clearRect(0,0,w,h);
+      for(const s of stars){
+        s.x += s.vx*s.z; s.y += s.vy*s.z;
+        if(s.x<-10) s.x = w+10; if(s.x>w+10) s.x = -10;
+        if(s.y<-10) s.y = h+10; if(s.y>h+10) s.y = -10;
+        ctx.globalAlpha = 0.35 + s.z*0.65;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fillStyle = '#ffffff'; ctx.fill();
+      }
+      requestAnimationFrame(step);
+    }
+    step();
+  })();
+
+  // Scroll progress
+  const progress = document.getElementById('progress');
+  window.addEventListener('scroll', ()=>{
+    const sc = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = (sc / max) * 100;
+    progress.style.width = pct + '%';
+  });
+
+  // Tap to flip (for touch devices)
+  document.querySelectorAll('.flip').forEach(card=>{
+    card.addEventListener('click', (e)=>{
+      // avoid navigating when clicking btn
+      if(e.target.closest('a')) return;
+      card.classList.toggle('flipped');
+    });
+  });
+
+  // Section change curtain + rail active
+  let curtainTimer;
+  const curtain = document.getElementById('curtain');
+  const secIO2 = new IntersectionObserver((ents)=>{
+    ents.forEach(ent=>{
+      if(ent.isIntersecting){
+        curtain.classList.add('show');
+        clearTimeout(curtainTimer);
+        curtainTimer = setTimeout(()=>curtain.classList.remove('show'), 500);
       }
     });
-  }, options);
-  sections.forEach(section => observer.observe(section));
+  }, {threshold:.92});
+  document.querySelectorAll('section').forEach(s=>secIO2.observe(s));
+
 </script>
 </body>
 </html>
