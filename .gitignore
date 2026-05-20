@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.playwright-mcp/
+portfolio-*.png
+portfolio-home.png
+portfolio-work*.png
+portfolio-carousel*.png
+portfolio-about*.png
+portfolio-top.png
+portfolio-bottom.png
+portfolio-whatido*.png
+portfolio-nav*.png
